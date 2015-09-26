@@ -17,6 +17,7 @@
     "hexo-deployer-git": "0.0.4",
     "hexo-generator-search": "~1.0.1",
     "hexo-renderer-markdown-it": "~3.4.0",
-    "hexo-generator-seo-friendly-sitemap": "0.0.9"
+    "hexo-generator-seo-friendly-sitemap": "0.0.9",
+    "hexo-notify": "0.0.1"
   }
 }
