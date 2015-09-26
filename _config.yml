@@ -1,0 +1,107 @@
+# Hexo Configuration
+## Docs: http://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+
+# Site
+title: 罗道文的私房菜
+subtitle: 分享知识，分享快乐
+description: 分享知识，分享快乐
+author:  罗道文 
+language: zh-Hans 
+timezone: 
+
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+url: http://luodw.github.io 
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: true
+  tab_replace:
+
+# Category & Tag
+default_category: categorized
+category_map:
+tag_map:
+archive: 1
+category: 1
+tag: 1
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 5
+pagination_dir: page
+
+# Extensions
+## Plugins: http://hexo.io/plugins/
+## Themes: http://hexo.io/themes/
+theme: next
+# Deployment
+## Docs: http://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo: git@github.com:luodw/luodw.github.io.git
+  branch: master
+
+search:
+  path: search.xml
+  field: post
+swiftype_key: KyH9spp4SyTL23L43VF8
+swift_search:
+  enable: true
+
+duoshuo_shortname: luodw
+duoshuo_hotartical: true
+
+markdown: 'default'
+
+
+baidu_analytics: c8bfd43d39ee97fe670b76fe06d38c03
+baidusitemap:
+    path: baidusitemap.xml
+
+creative_commons: by-nc-sa
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+
+# Social links
+social:
+  github: https://github.com/luodw
+  weibo: http://weibo.com/15710688237
+  zhihu: http://www.zhihu.com/people/972949726@qq.com
+
+  sitemap:
+    path: sitemap.xml
