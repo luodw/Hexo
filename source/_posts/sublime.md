@@ -9,16 +9,16 @@ toc: true
 
 sublime3是一款非常好的编辑器,用它来敲写代码是一个非常棒的利器. SublimeClang是C++自动补全插件,功能强大.
 
-首先要安装Package Control,一个用于管理插件的好工具,可以用于安装,删除,禁用相应的插件.安装如下:
+首先要安装**Package Control**,一个用于管理插件的好工具,可以用于安装,删除,禁用相应的插件.安装如下:
 
-```
-cd ~/.config/sublime-text-3/Packages/
-git clone https://github.com/wbond/package_control_channel.git  Package\ Control
-```
+1. 点击Preferences > Browse Packages菜单
+2. 进入打开的目录的上层目录，然后再进入Installed Packages/目录
+3. 下载Package Control.sublime-package<https://sublime.wbond.net/Package%20Control.sublime-package>并复制到Installed Packages/目录
+4. 重启Sublime Text。
 
 重新启动SublimeText 3，然后使用快捷键Ctrl + Shift + p，在弹出的输入框中输入Package Control则可以看到Install Package的选项，选择它后一会儿（看左下角的状态）会弹出插件查询及安装窗口，输入想用的插件，选中回车即可。
 
-SublimeClang是Sublime Text中唯一的C/C++自动补全插件，功能强大，自带语法检查功能，不过最近作者已经停止更新了，目前只能在Sublime Text 2的Package Control中可以找到并自动安装，在SublimeText 3中只能手动通过源码安装，其代码线在https://github.com/quarnster/SublimeClang中
+SublimeClang是Sublime Text中唯一的C/C++自动补全插件，功能强大，自带语法检查功能，不过最近作者已经停止更新了，目前只能在Sublime Text 2的Package Control中可以找到并自动安装，在SublimeText 3中只能手动通过源码安装，其代码线在<https://github.com/quarnster/SublimeClang中>
 
 ```
 安装相关软件

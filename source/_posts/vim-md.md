@@ -1,11 +1,11 @@
 title: vim配置markdown语法高亮
 date: 2015-09-26 21:46:28
 tags:
-- configure
+- Configure
 categories: 
-- configure 
+- Configure 
 toc: true
-
+ 
 ---
 
 linux下写markdown,目前还没看到很优秀的编辑器,sublime是一款非常不错都编辑器,可是对中文支持不是很好,所以只能投向与**vim**的怀抱.
@@ -24,7 +24,7 @@ cp ./ftdetect/markdown.vim ~/.vim/ftdetect/
 一切就是这么简单，复制到对应目录，然后重启你的vim就ok了。
 
 #### 插件内容
-
+ 
 尽管名字相同，两个文件夹中的文件是不同的。
    1.  syntax中的 mkd.vim 是关键的语法解析文件，里面是关于语法高亮的详细定义。
    2. ftdetect中的 mkd.vim 定义的是自动解析哪些文件。
