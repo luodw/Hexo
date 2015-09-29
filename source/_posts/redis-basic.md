@@ -3,8 +3,10 @@ date: 2015-09-23 14:53:32
 tags:
 - Redis
 categories:
-- Technology
+- Redis
+    
 toc: true
+
 ---
 　　Redis是一个key-value存储系统，即键值对非关系型数据库，和Memcached类似，目前正在被越来越多的互联网公司采用。本教程只是简易的教程，指导大家如何安装运行Redis以及简单地操作Redis。如果要深入学习Redis，可以参考文章末尾的链接。
 
