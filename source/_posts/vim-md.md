@@ -2,8 +2,10 @@ title: vim配置markdown语法高亮
 date: 2015-09-26 21:46:28
 tags:
 - Configure
+- Vim
 categories: 
-- Configure 
+- Configure
+- Vim 
 toc: true
  
 ---

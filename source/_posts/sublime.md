@@ -2,8 +2,11 @@ title: Sublime3支持C++智能提示
 date: 2015-09-25 22:05:58
 tags:
 - Configure
+- Sublime
 categories:
 - Configure
+- Sublime
+
 toc: true
 ---
 
