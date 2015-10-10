@@ -40,7 +40,7 @@ cd ~/.vim/bundle/YouCompleteMe
 
 安装结束之后，打开vim，如果没有提示报错或提示，则说明安装成功了．
 
-### 配置ycm
+### 配置ycm:
 ycm安装成功后，还不能代码补全提示，需要配置.ycm_extra_conf.py．之前我都是直接用网上教程的配置文件，结果都不能很好的智能提示，最好的方法还是用ycm自带的.ycm_extra_conf.py文件．
 ```
 cp third_party/ycmd/examples/.ycm_extra_conf.py ~/
@@ -62,3 +62,35 @@ let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 '/usr/include/c++/4.8.2'
 ```
 cpp文件可以智能提示补充了．
+
+> 补充二　
+
+在使用ycm时，但代码出现错误时，我们可以在普通模式下输入
+```
+:YcmDiags
+```
+然后会出现Quickfix窗口，里面罗列了代码的错误．这时当光标指向错误列表某一个时，按回车键，即可跳转到错误处．
+
+问题是跳转过去之后，怎么定位下一个错误了？quickfix帮助文档是说用ln，网上教程是cn但是，我这都不行，只能用鼠标点了．
+
+那么怎么设置vim支持鼠标操作了．即：
+```
+:set mouse=a　即可
+```
+说明下：
+
+'mouse' 选项的字符决定 Vim 在什么场合下会使用鼠标:
++   n       普通模式
++   v       可视模式
++   i       插入模式
++   c       命令行模式
++   h       在帮助文件里，以上所有的模式
++   a       以上所有的模式
++   r       跳过 |hit-enter| 提示
++   A       在可视模式下自动选择
+
+缺省情况下'mouse'为空，即不适用鼠标．set mouse=a 等价与set mouse=nvich表示任何场合都用鼠标．
+
+
+
+

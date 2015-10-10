@@ -5,7 +5,7 @@ tags:
 - 反汇编
 - 函数栈
 categories:
-- gdb
+- Gdb
 - C/C++
 
 ---
