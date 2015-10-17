@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://luodw.github.io 
+url: http://luodw.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -77,9 +77,9 @@ deploy:
 search:
   path: search.xml
   field: post
-swiftype_key: KyH9spp4SyTL23L43VF8
-swift_search:
-  enable: true
+#swiftype_key: KyH9spp4SyTL23L43VF8
+#swift_search:
+#  enable: true
 
 duoshuo_shortname: luodw
 duoshuo_hotartical: true
