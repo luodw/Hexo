@@ -30,7 +30,7 @@ eclipse配置CDT，到官网下载CDT，http://www.eclipse.org/cdt/，然后安�
 #### 安装MySQL
 
 ```
-执行sudo apt-get install mysql-server my-client进行安装 MySQL。
+执行sudo apt-get install mysql-server mysql-client进行安装 MySQL。
 mysql  用户名:root   密码：root
 ```
 
