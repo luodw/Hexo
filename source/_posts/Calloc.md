@@ -300,4 +300,4 @@ protected:
 ```
 有代码可以看出，vector内嵌了data_allocator类型，当需要分配内存时，调用simple_alloc的成员方法即可。
 
-参考:《STL源码剖析》和博客<http://www.cnblogs.com/lfsblack/archive/2012/11/10/2764334.html>
+参考:《STL源码剖析》和[lfsblackoverflow的博客](http://www.cnblogs.com/lfsblack/archive/2012/11/10/2764334.html)
