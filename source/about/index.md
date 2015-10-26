@@ -24,6 +24,4 @@ date: 2015-09-23 20:35:47
  　　师弟:阮榕城<http://ruanrc.github.io/>
 
 # 联系方式
- 　　qq：972949726
-
 　　E-mail: ldw972949726@163.com
