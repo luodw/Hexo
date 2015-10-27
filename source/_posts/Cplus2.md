@@ -2,7 +2,7 @@ title: C++对象模型之内存布局二
 date: 2015-10-07 09:49:00
 tags:
 - C/C++
-- C++对象内存模型
+- 对象内存模型
 categories:
 - C/C++
 toc: true

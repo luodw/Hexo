@@ -4,6 +4,7 @@ tags:
 - C++
 - 赋值操作符
 - 析构函数
+- 对象模型
 categories:
 - C/C++
 toc: true

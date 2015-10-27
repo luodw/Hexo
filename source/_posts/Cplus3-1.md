@@ -3,6 +3,7 @@ date: 2015-10-11 19:54:24
 tags:
 - C++
 - 构造函数
+- 对象模型
 categories:
 - C/C++
 toc: true 
