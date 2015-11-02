@@ -8,6 +8,8 @@ tags:
 categories:
 - leveldb
 
+toc: true
+
 ---
 
 上篇文章介绍了leveldb缓冲池，这篇文章主要来分析leveldb是如何读取磁盘的数据。这里先要说明下，leveldb有两种缓冲池，一个是block_cache,另一个是table_cache。block\_cache缓冲的是data block，table\_cache缓冲的是每个sst文件的文件指针(RandomAccessFile指针)和这个文件对应的Table指针。

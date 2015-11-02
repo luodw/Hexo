@@ -162,6 +162,11 @@ class LookupKey {
 };
 
 ```
+所以总结下如下:
+1. 最短的为internalkey，就是userkey+sequence+type组成
+2. 接下来是lookupkey,由internalkey的长度+internalkey组成
+3. skiplist中存储的键为lookupkey+value的长度+value。
+
 ## memtable
 memtable主要功能就是为上层调用插入数据提供接口，所以memtable主要有三个公有接口，Get,Add,NewIterator，分别是获取某个键值，添加某个键值，以及获取迭代memtable的迭代器。私有成员主要有四个：
 ```

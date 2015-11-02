@@ -25,3 +25,9 @@ date: 2015-09-23 20:35:47
 
 # 联系方式
 　　E-mail: ldw972949726@163.com
+
+# 强烈推荐网站
+1. [斯坦福大学提供的一个全面位运算技巧](http://graphics.stanford.edu/~seander/bithacks.html "")
+2. [一个写FUSE文件系统的教程](http://www.cs.nmsu.edu/~pfeiffer/fuse-tutorial/ "");
+3. [介绍Linux网络IO](http://www.kegel.com/c10k.html "");
+4. [一个分享源码的网站](http://ccodearchive.net/list.html "");

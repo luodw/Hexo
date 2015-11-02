@@ -9,6 +9,8 @@ tags:
 categories:
 - leveldb
 
+toc: true
+
 ---
 本篇文章分析下leveldb写sst文件的源码，本质上就是为immemtable compaction到leveldb0文件提供接口，主要是插入。如果要理解这部分的源码，首先必须先将上篇sst文件格式搞清楚，否则，看源码会非常吃力，或者说毫无头绪。
 

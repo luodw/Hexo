@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://luodw.github.io
+url: http://luodw.cc
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -77,9 +77,8 @@ deploy:
 search:
   path: search.xml
   field: post
-#swiftype_key: KyH9spp4SyTL23L43VF8
-#swift_search:
-#  enable: true
+
+swiftype_key: chcHaQRahdwMUNbzMpw5
 
 duoshuo_shortname: luodw
 duoshuo_hotartical: true
@@ -100,8 +99,8 @@ feed:
 # Social links
 social:
   github: https://github.com/luodw
-  weibo: http://weibo.com/15710688237
-  zhihu: http://www.zhihu.com/people/972949726@qq.com
+  weibo: http://weibo.com/1699355617/profile?rightmod=1&wvr=6&mod=personinfo
+  zhihu: http://www.zhihu.com/people/tao-tao-tao-tao-wen
 
   sitemap:
     path: sitemap.xml
