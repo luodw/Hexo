@@ -30,14 +30,13 @@ AVL树就这四种旋转情况，具体怎么旋转，就百度了．我主要�
 
 ----
 
-AVL树节点主要由值，高度，左子树，右子树和父亲组成，那篇博客中没有定义父亲，所以在实现删除的时候会出错．
+AVL树节点主要由值，高度，左子树，右子树组成，我之前加了父亲成员，但是发现难度加大了，而且经常错误，所以以上属性足够了．
 ```
 typedef int ValueType;
 struct avl_node
 {
 	ValueType data;
 	int height;
-	struct avl_node *parent;
 	struct avl_node *left;
 	struct avl_node *right;
 };
@@ -76,11 +75,7 @@ static int Max(int lhs,int rhs)
 static node SingleRotateLeft(node &p1)
 {
 	node p2=p1->left;//找到p1的左子树
-	p2->parent=p1->parent;//p2的父亲转交给p1
-	p1->parent=p2;//p1的父亲变成了p2
 	p1->left=p2->right;//将p2的右子树移至p1的左子树
-	if(p2->right!=NULL)//如果p2的右子树非空，则还要建立父亲关系
-		p2->right->parent=p1;
 	p2->right=p1;//建立p2和p1的关系
 	//更新p1和p2的高度，因为p2高度依赖p1，所以先更新p1
 	p1->height=Max(Height(p1->left),Height(p1->right))+1;
@@ -90,12 +85,9 @@ static node SingleRotateLeft(node &p1)
 //右右情况的旋转和左左的对称，所以原理类似
 static node SingleRotateRight(node &p1)
 {
+
 	node p2=p1->right;
-	p2->parent=p1->parent;
-	p1->parent=p2;
 	p1->right=p2->left;
-	if(p2->left!=NULL)//must
-		p2->left->parent=p1;
 	p2->left=p1;
 	p1->height=Max(Height(p1->left),Height(p1->right))+1;
 	p2->height=Max(Height(p2->left),Height(p2->right))+1;
@@ -136,7 +128,6 @@ static node Insert(node root,node parent,ValueType x)
 		root->data=x;
 		root->height=0;
 		root->left=root->right=NULL;
-		root->parent=parent;
 	}
 	//当插入值比当前节点值小时，则往左子树插入
 	else if(x<root->data)
@@ -175,17 +166,18 @@ AVL树插入操作相对较简单，但是AVL删除操作就相对复杂了．AV
 2. 删除节点左子树非空，右子树空
 3. 删除节点右子树非空，左子树空
 4. 删除节点左右子树都为空
+但是真正要考虑的只有右子树为空和非空的情况，因为右子树非空的话，要找到后继几点；其他情况，直接指针更新即可．
 ```
-void delete_node(node root,ValueType x)
+node delete_node(node root,ValueType x)
 {
 	if(root==NULL)//空树直接返回
-		return;
+		return NULL;
 	if(x<root->data)//删除值小于当前节点，说明删除节点在当前节点左侧
 	{
-		delete_node(root->left,x);
+		root->left=delete_node(root->left,x);
 		if(Height(root->right)-Height(root->left)==2)
 		{
-			if(root->right->left!=NULL && (Height(root->right->left)>Height(root->right->right)) )
+			if(Height(root->right->left)>Height(root->right->right))
 				root=DoubleRotateRL(root);
 			else
 				root=SingleRotateRight(root);
@@ -193,10 +185,10 @@ void delete_node(node root,ValueType x)
 	}
 	else if(x>root->data)//删除节点在当前节点右侧
 	{
-		delete_node(root->right,x);
+		root->right=delete_node(root->right,x);
 		if(Height(root->left)-Height(root->right)==2)
 		{
-			if(root->left->right!=NULL && (Height(root->left->right)>Height(root->left->left)))
+			if(Height(root->left->right)>Height(root->left->left))
 				root=DoubleRotateLR(root);
 			else
 				root=SingleRotateLeft(root);
@@ -204,61 +196,82 @@ void delete_node(node root,ValueType x)
 	}
 	else//找到删除节点
 	{
-		if(root->left && root->right)
-		{//对于左右子树都不为空的情况
+		if(root->right)
+		{//右子树不为空的情况
 			node temp=root->right;
 			while(temp->left!=NULL) temp=temp->left;
-			int data=temp->data;
-			int height=temp->height;
-			delete_node(root,temp->data);//删除后继节点
-			root->data=data;//再将后继节点的值赋给当前节点
-			root->height=height;
+			root->data=temp->data;
+			root->height=temp->height;
+			root->right=delete_node(root->right,temp->data);//删除后继节点
 		}
 		else
-		{//只有一棵子树或者两棵子树都为空
-			if(root->left && !root->right)
-			{//左子树非空，右子树空，则让左子树和父亲建立关系即可
-			//也就是跳过当前节点
-				if(root->data<root->parent->data){
-					root->parent->left=root->left;
-					root->left->parent=root->parent;
-				}
-				else{
-					root->parent->right=root->left;
-					root->left->parent=root->parent;
-				}
-			}
-			else if(!root->left && root->right)
-			{//右子树空，左子树非空
-				if(root->data<root->parent->data){
-					root->parent->left=root->right;
-					root->right->parent=root->parent;
-				}
-				else{
-					root->parent->right=root->right;
-					root->right->parent=root->parent;
-				}
-			}
-			else
-			{//左右子树都为空,即为叶子节点，则直接将父亲相应节点设为空即可
-				if(root->data<root->parent->data)
-					root->parent->left=NULL;
-				else
-					root->parent->right=NULL;
-			}
-			free(root);//删除当前节点
-			root=NULL;//当前节点指针为空
+		{//右子树为空的情况，free节点，返回被删除节点的左节点
+		//这也是真正删除节点的地方
+			node temp=root;
+			root=root->left;
+			free(temp);
+			return root;
 		}
 	}
-	if(root==NULL) return; //这是必须的，因为删除节点时，这个节点的指针被设置为NULL
-	//如果直接执行下面那行，会报错，因为引用一个无效内存．
+	//每次删除之后，都要更新节点的高度
 	root->height=Max(Height(root->left),Height(root->right))+1;
-	return;
+	return root;
 }
 ```
-在编写这个平衡二叉树时，一定要判断是否为空，因为之前没判断，导致经常core dump，引用了一块无效的内存，例如旋转时，判断if(p2->left!=NULL)，以及删除函数中，判断root==NULL等等．
+这几天研究平衡二叉树的体会就是，插入和删除函数一定要返回当前节点，因为不返回当前节点的话，删除时就要加入父亲成员，而加入父亲成员，程序的复杂度又加大了，所以这个程序的实现应该是最简单了．
 
-平衡二叉树的其他操作和二叉搜索树一样，可以直接拿来用．
+平衡二叉树的其他操作和二叉搜索树一样，像查找，遍历，前驱和后继等等，因为这些操作都不改变二叉树，所以可以直接拿来用．
+
+下面是我写的检测程序:
+```
+int main(void)
+{
+	int arr[10]={9,3,5,7,1,0,2,4,8,6};
+	int i=0;
+	node root=NULL;
+	for(;i<10;i++)
+		root=Insert(root,NULL,arr[i]);
+	print_avl(root);
+	printf("input delete node key:  ");
+	while((scanf("%d",&i))!=EOF)
+	{
+		delete_node(root,i);
+		print_avl(root);
+		printf("input delete node key:  ");
+	}
+	printf("\n");
+	return 0;
+}
+```
+假设删除程序删除９，则可得到如下结果:
+```
+charles@charles-Lenovo:~/mydir/algorithm$ ./avl
+data=0  height=0: 
+data=1  height=2: left child=0,right child=3
+data=2  height=0: 
+data=3  height=1: left child=2,right child=4
+data=4  height=0: 
+data=5  height=3: left child=1,right child=8
+data=6  height=0: 
+data=7  height=1: left child=6,
+data=8  height=2: left child=7,right child=9
+data=9  height=0: 
+input delete node key:  9
+data=0  height=0: 
+data=1  height=2: left child=0,right child=3
+data=2  height=0: 
+data=3  height=1: left child=2,right child=4
+data=4  height=0: 
+data=5  height=3: left child=1,right child=7
+data=6  height=0: 
+data=7  height=1: left child=6,right child=8
+data=8  height=0: 
+```
+删除9之后，8节点左子树比右子树高2，所以要进行左左旋转．示意图如下:
+![删除节点之后](http://7xjnip.com1.z0.glb.clouddn.com/ldw-123.jpg "")
+
+平衡二叉树先研究到这吧，下篇文章最后把红黑树研究下...
+
 
 
 
