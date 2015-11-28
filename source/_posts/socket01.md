@@ -17,7 +17,7 @@ linux系统最重要的两块知识:进程(线程)间的通信与同步和网络
 -----
 
 两台计算机网络的建立,一定经过三次握手过程,先上示意图,来自**网络编程卷1**
-![TCP连接建立和断开](http://7xjnip.com1.z0.glb.clouddn.com/ldw-选区_039.png "")
+![TCP连接建立和断开](http://7xjnip.com1.z0.glb.clouddn.com/ldw-选区_041.png "")
 首先要说明的是,客户端通过建立socket并调用conect连接服务器为主动打开,而服务器通过调用socket,bind,listen准备客户连接为被动过程.
 1. 首先服务器端通过调用socket,bind,listen监听服务器端的套接字,然后调用accept并阻塞在accept,等待客户连接.
 2. 客户端先调用socket创建套接字,然后阻塞在connect调用.这时内核将自动执行三次握手过程.当客户端向服务器端发送一个syn时，这时客户端处于SYN_SENT状态；当服务器收到客户发来的syn时，处于SYN_RECV状态，并返回ack和syn；
