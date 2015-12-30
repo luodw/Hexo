@@ -10,7 +10,7 @@ toc: true
 
 ---
 
-上篇博客稍微介绍了域名服务器和和getaddrinfo等函数,这篇文章想好好总结下关于域名解析命令的使用,主要有以下三个命令:dig,host和nslookup
+上篇博客稍微介绍了域名服务器和和getaddrinfo等函数,这篇文章想好好总结下关于域名解析命令的使用,主要有以下三个命令:dig,host和nslookup。这三个命令主要是用于本地域名查询。原理就是当调用这个三个命令时，内核会向本地域名服务器查询，即dnsmasq这个守护进程。当dnsmasq有缓存所需要查询的域名时，直接返回，如果没有，则递归向外界的域名服务器查询。
 
 # dig命令
 
@@ -19,7 +19,7 @@ toc: true
 dig命令的使用方法很简单,主要就是dig +域名.
 1. dig baidu.com即可输出baidu.com这个域名的ip地址,所在的域名服务器以及域名服务器的地址;如下;
 ```
-charles@charles-Lenovo:~/mydir/Hexo/source/_posts$ dig baidu.com
+:charles@charles-Lenovo:~/mydir/Hexo/source/_posts$ dig baidu.com
 
 ; <<>> DiG 9.9.5-3ubuntu0.6-Ubuntu <<>> baidu.com
 dig这个程序的版本号和要查询的域名
