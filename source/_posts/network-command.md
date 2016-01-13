@@ -1,4 +1,4 @@
-title:命令netstat,trace和tcpdump
+title: 命令netstat,trace和tcpdump
 date: 2015-12-30 20:07:29
 tags:
 - network
@@ -225,11 +225,52 @@ ifconfig后面这些命令选项平常使用用得少，记得如何查看自己
 
 ---
 
-这个命令主要用于抓包，这也是我最喜欢的 命令之一，太强大了。有空再写。。。
+这个命令主要用于抓包，这也是我最喜欢的 命令之一，太强大了.当udp程序收到icmp不可达数据包时，用户程序是不会知道的，所以用tcpdump看到，因为tcpdump可以解析所有到大网络层的数据包，包括icmp，arp等等。当然还有udp,tcp。
 
-
-
-
+1. 默认启动
+```
+tcpdump
+```
+普通情况下，直接启动tcpdump将监视第一个网络接口上所有流过的数据包。
+2. 监视指定网络接口的数据包
+```
+tcpdump -i lo
+charles@charles-Lenovo:~/mydir/mycode$ sudo tcpdump -i lo 
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on lo, link-type EN10MB (Ethernet), capture size 65535 bytes
+11:16:16.541533 IP localhost.44530 > localhost.8888: UDP, length 6
+11:16:16.541558 IP localhost > localhost: ICMP localhost udp port 8888 unreachable, length 42
+```
+这是我当初在线测试connect函数时写的程序，不开启服务器，开启客户端，然后输入数据，之后服务器会返回不可达的ICMP包文消息。默认监听eth0，我们可以指定tcpdump监听回环接口。
+3. 指定监听tcp或者udp
+```
+tcpdump tcp
+tcpdump udp
+```
+4. 指定监听的主机，可以是主机名或者ip
+```
+tcpdump host Charles
+tcpdump host 192.168.1.151
+```
+5. 指定监听的端口
+```
+tcpdump port 8888
+```
+6. 截获主机hostname发送或接收的所有消息
+```
+截获主机hostname发送的所有数据
+tcpdump -i eth0 src host hostname
+监视所有送到主机hostname的数据包
+tcpdump -i eth0 dst host hostname
+```
+7. 监视指定主机和端口的数据包
+```
+如果想要获取主机210.27.48.1接收或发出的telnet包，使用如下命令
+tcpdump tcp port 23 and host 210.27.48.1
+对本机的udp 123 端口进行监视 123 为ntp的服务端口
+tcpdump udp port 123 
+```
+初学阶段先了解这么多，就够了。后面有需要，在深入学习。
 
 
 
