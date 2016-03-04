@@ -561,10 +561,10 @@ static int lru_pull_tail(const int orig_id, const int cur_lru,
 这个函数比较长,也比较难懂.主要就是遍历Lru队列,检查是否有过期的Item,以及lru之间item的迁移,也很符合maintainer维护线程这个名称.
 
 lru维护抓取线程就讲到这了,总结下:
-> 每一个slabclass_t都对应四个lru队列,hot,warm,cold,noexp lru,四个lru的索引相差64.
-> 开启maintainer和crawler线程,可以通过memcached -o lru_crawler,lru_maintainer.
-> 可以通过客户端命令指定抓取哪个lru,lru_crawler crawl <classid,classid,classid | all>
-> maintainer线程主要维护hot,warm,cold lru平衡.
+* 每一个slabclass_t都对应四个lru队列,hot,warm,cold,noexp lru,四个lru的索引相差64.
+* 开启maintainer和crawler线程,可以通过memcached -o lru_crawler,lru_maintainer.
+* 可以通过客户端命令指定抓取哪个lru,lru_crawler crawl <classid,classid,classid | all>
+* maintainer线程主要维护hot,warm,cold lru平衡.
 
 
 
