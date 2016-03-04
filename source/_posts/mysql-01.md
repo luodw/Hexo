@@ -1,13 +1,13 @@
-title: mysql一些基础知识
+title: MySQL一些基础知识
 date: 2016-03-04 21:42:59
 tags:
-- mysql
+- MySQL
 - innodb
 categories:
-- mysql
+- MySQL
 toc: ture
 
---
+---
 
 最近在深入学习MySQL存储引擎innodb,使用书籍为**MySQL技术内幕(InnoDB存储引擎)**第二版;在学习过程中,由于有之前看NoSQL数据库的基础,学习比较快,但是也发现了一个问题,即show环境变量,到底什么时候是会话变量,什么时候是全局变量,以及'select+函数'怎么用等等;很多都是基础问题,虽然会用,但是总是迷迷糊糊,所以打算通过这篇文章记录下来,今后查找,也方便;
 
