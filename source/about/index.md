@@ -12,7 +12,7 @@ date: 2015-09-23 20:35:47
 
  
 # 知识特点
-　　本人主要研究计算机操作系统，C/C++，redis和leveldb键值对数据库，MySQL关系型数据库
+　　本人主要研究计算机Linux操作系统, C/C++, redis, memcache和leveldb键值对数据库，MySQL关系型数据库.
 
  
 # 关于博客
@@ -28,6 +28,10 @@ date: 2015-09-23 20:35:47
 
 # 强烈推荐网站
 1. [斯坦福大学提供的一个全面位运算技巧](http://graphics.stanford.edu/~seander/bithacks.html "")
-2. [一个写FUSE文件系统的教程](http://www.cs.nmsu.edu/~pfeiffer/fuse-tutorial/ "");
-3. [介绍Linux网络IO](http://www.kegel.com/c10k.html "");
-4. [一个分享源码的网站](http://ccodearchive.net/list.html "");
+2. [介绍Linux网络IO](http://www.kegel.com/c10k.html "");
+3. [一个分享源码的网站](http://ccodearchive.net/list.html "");
+4. [一位谷歌工程师关于innodb博客](http://blog.jcole.us/innodb/ "")
+5. [一位外国大神的博客,在linux内核内存管理方面写的很好](http://duartes.org/gustavo/blog/archives/ "")
+6. [英特尔80386CPU编程手册](https://pdos.csail.mit.edu/6.828/2008/readings/i386/toc.htm "")
+7. [阿里核心系统团队博客](http://csrd.aliapp.com/ "")
+
