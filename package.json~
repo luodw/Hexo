@@ -22,7 +22,6 @@
     "hexo-renderer-markdown-it": "~3.4.0",
     "hexo-renderer-stylus": "^0.3.0",
     "hexo-server": "^0.1.2",
-    "hexo-tag-cloud": "^2.0.0",
     "spawn-sync": "^1.0.15"
   }
 }
