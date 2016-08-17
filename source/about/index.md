@@ -12,7 +12,7 @@ date: 2015-09-23 20:35:47
 
  
 # 知识特点
-　　本人主要研究计算机Linux操作系统, C/C++, redis, memcache和leveldb键值对数据库，MySQL关系型数据库.
+　　本人主要擅长Linux操作系统, C/C++, golang, redis, memcache和leveldb键值对数据库，MySQL关系型数据库.
 
  
 # 关于博客
@@ -32,4 +32,7 @@ date: 2015-09-23 20:35:47
 5. [一位外国大神的博客,在linux内核内存管理方面写的很好](http://duartes.org/gustavo/blog/archives/ "")
 6. [英特尔80386CPU编程手册](https://pdos.csail.mit.edu/6.828/2008/readings/i386/toc.htm "")
 7. [阿里核心系统团队博客](http://csrd.aliapp.com/ "")
-
+8. [golang的实现](https://tracymacding.gitbooks.io/implementation-of-golang/content/ "")
+9. [无锁设计，因为futex才找到的](http://locklessinc.com/articles/mutex_cv_futex/ "")
+10. [restcookbook.com](http://restcookbook.com/Basics/loggingin/ "")
+11. [深入理解go](https://tiancaiamao.gitbooks.io/go-internals/content/zh/index.html "")
