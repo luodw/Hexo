@@ -39,6 +39,8 @@ groupcache存储的是kv结构，同是memcache作者出品，官方github上说
 groupcache是一个缓存库，也就是说不是一个完整的软件，需要自己实现main函数。可以自己写个测试程序，跑跑groupcache，我看了有些博客是直接引用[Playing With Groupcache](http://capotej.com/blog/2013/07/28/playing-with-groupcache/ "")这篇博客的测试程序，这个测试程序，客户端和groupcache通过rpc进行通信，而groupcache peer之间通过http协议进行通信；这是比较好的做法，因为如果客户端与服务器通信和groupcache之间通信采用的是同一个端口，那么在并发量上去的时候，会严重影响性能；下图是这个测试程序的架构图:
 ![groupcache结构图](http://7xjnip.com1.z0.glb.clouddn.com/ldw-topology.png "")
 
+这个原理就是如果客户端用的是set或get命令时，这时直接操作的是数据源(数据库或文件)，如果调用的是cget命令，则从groupcache中查找数据；
+
 groupcache内部实现了lru和一致性哈希，我觉得大家可以看看，学习golang是如何实现lru和一致性哈希。下面简单分析groupcache Get函数的实现以及peer之间的通信；
 
 ## groupcache Get函数实现
