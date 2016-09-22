@@ -101,3 +101,10 @@ social:
   github: https://github.com/luodw
   weibo: http://weibo.com/1699355617/profile?rightmod=1&wvr=6&mod=personinfo
   zhihu: http://www.zhihu.com/people/tao-tao-tao-tao-wen
+
+# title, chinese available
+links_title: Links
+# links
+links:
+  厦门大学数据库实验室: http://dblab.xmu.edu.cn/
+  赖明星: http://mingxinglai.com/
