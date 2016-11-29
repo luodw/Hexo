@@ -13,6 +13,10 @@ categories:
 
 我学习的习惯，除了学习如何使用，还喜欢研究源码，学习运行机制，这样用起来才会得心应手或者说，使用这些语言或框架，就和平时吃饭睡觉一样，非常自然；因为最近有接触到bottle和flask  web框架，所以想看下这两个的源码，但是这两个框架是基于python自带的http，因此就有了这篇文章；
 
+这篇主要从以下几个方面来解析python之http模块:
+1. 一个python http简单的例子
+2. http之server;
+3. http之handler;
 
 # python http简单例子
 *****
