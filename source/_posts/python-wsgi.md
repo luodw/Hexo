@@ -27,7 +27,7 @@ toc: true
 ----
 
 这里先给出wsgiref模块的简单示例，有个感性的认识，后续在分析实现原理；代码如下:
-```
+```python
 from wsgiref.simple_server import make_server
 
 def application(environ, start_response):

@@ -28,7 +28,7 @@ toc: true
 ![进程的地址空间](http://7xjnip.com1.z0.glb.clouddn.com/ldw-%E9%80%89%E5%8C%BA_015.png "")
 
 当我们在终端启动一个程序时，终端进程调用exec函数将可执行文件载入内存，此时代码段，数据段，bbs段，stack段都通过mmap函数映射到内存空间，堆则要根据是否有在堆上申请内存来决定是否映射；exec执行之后，此时并未真正开始执行进程，而是将cpu控制权交给了动态链接库装载器，由它来将该进程需要的动态链接库装载进内存；之后才开始进程的执行；这个过程可以通过strace命令跟踪进程调用的系统函数来分析，
-```
+```bash
 charles@charles-Aspire-4741:~$ strace ./toUpper
 execve("./toUpper", ["./toUpper"], [/* 72 vars */]) = 0
 brk(NULL)                               = 0x1bef000
@@ -77,7 +77,7 @@ OOM关键文件oom_kill.c，里面介绍了当内存不够时，系统如何选�
 当产生oom之后，函数select_bad_process会遍历所有进程，通过之前提到的那些因素，每个进程都会得到一个oom_score分数，分数最高，则被选为杀死的进程；
 
 我们可以通过设置/proc/<pid>/oom_adj分数来干预系统选择杀死的进程；
-```
+```c++
 /*
  * /proc/<pid>/oom_adj set to -17 protects from the oom killer for legacy
  * purposes.
@@ -116,7 +116,7 @@ OOM关键文件oom_kill.c，里面介绍了当内存不够时，系统如何选�
 
 
 我们先来看下代码段和动态链接库映射段，这两个都是属于共享文件映射，也就是说由同一个可执行文件启动的两个进程是共享这两个段，都是映射到同一块物理内存；那么这块内存在哪了？我写了个程序测试如下：
-```
+```c
 #include<stdio.h>
 #include<sys/mman.h>
 #include<unistd.h>
@@ -128,7 +128,7 @@ OOM关键文件oom_kill.c，里面介绍了当内存不够时，系统如何选�
 #define SIZE  1024*1024*1024
 
 int main(int argc,char* argv[]) {
-    int fd; 
+    int fd;
     struct stat sb;  
     char *p;
   	if ((fd = open(argv[1], O_RDWR)) < 0) {
@@ -136,20 +136,20 @@ int main(int argc,char* argv[]) {
 	}  
     if ((fstat(fd, &sb)) == -1) {  
         perror("fstat");  
-    } 
+    }
     if ((p = (char *)mmap(NULL,sb.st_size, PROT_READ |   
                 PROT_WRITE, MAP_SHARED , fd, 0)) == (void *)-1) {  
     	perror("mmap");  
 	 }
 	//必须执行下面memset函数，否则系统不会分配真实内存
-	memset(p,'c',sb.st_size); 
+	memset(p,'c',sb.st_size);
 	sleep(100);
 	return 0;
 }
 ```
 
 我们先看下当前系统的内存使用情况:
-```
+```bash
 charles@charles-Aspire-4741:~$ free -m
               total        used        free      shared  buff/cache   available
 Mem:           5828        1596        3612          47         620        3913
@@ -186,7 +186,7 @@ Swap:          3904           4        3900
 #define SIZE  1024*1024*1024
 
 int main(int argc,char* argv[]) {
-    int fd; 
+    int fd;
     struct stat sb;  
     char *p;
         if ((fd = open(argv[1], O_RDWR)) < 0) {
@@ -194,13 +194,13 @@ int main(int argc,char* argv[]) {
         }  
     if ((fstat(fd, &sb)) == -1) {  
         perror("fstat");  
-    } 
+    }
     if ((p = (char *)mmap(NULL,sb.st_size, PROT_READ |   
                 PROT_WRITE, MAP_PRIVATE , fd, 0)) == (void *)-1) {  
         perror("mmap");  
          }
         //必须执行下面memset函数，否则系统不会分配真实内存
-        memset(p,'c',sb.st_size); 
+        memset(p,'c',sb.st_size);
         sleep(100);
         return 0;
 }
@@ -216,7 +216,7 @@ charles@charles-Aspire-4741:~$ free -m
 Mem:           5828        1679        3681          47         467        3840
 Swap:          3904           4        3900
 /*------------------------------------------*/
-./hello fileblock 
+./hello fileblock
 /*-----------------------------------------*/
 //调用程序之后内存使用情况
 charles@charles-Aspire-4741:~$ free -m
@@ -245,12 +245,12 @@ ok，现在我把上述测试程序改成私有匿名映射
 #define SIZE  1024*1024*1024
 
 int main(int argc,char* argv[]) {  
-    char *p; 
+    char *p;
     if ((p = (char *)mmap(NULL,SIZE, PROT_READ |   
                 PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)) == (void *)-1) {  
     	perror("mmap");  
 	 }
-	memset(p,'c',SIZE); 
+	memset(p,'c',SIZE);
 	sleep(100);
 	return 0;
 }
@@ -289,19 +289,19 @@ Swap:          3904           4        3900
 #define SIZE  1024*1024*1024
 
 int main(int argc,char* argv[]) {  
-    char *p; 
+    char *p;
     if ((p = (char *)mmap(NULL,SIZE, PROT_READ |   
                 PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0)) == (void *)-1) {  
         perror("mmap");  
          }
-        memset(p,'c',SIZE); 
+        memset(p,'c',SIZE);
         sleep(100);
         return 0;
 }
 
 ```
 这时来看下内存的使用情况：
-```
+```bash
 /测试程序执行前：
 charles@charles-Aspire-4741:~$ free -m
               total        used        free      shared  buff/cache   available
@@ -493,7 +493,7 @@ LRU_UNEVICTABLE即为不可驱逐页lru，我的理解就是当调用mlock锁住
 
 简单说下linux内核自动回收内存原理；内核有一个kswapd会周期性的检查内存使用情况，如果发现空闲内存定于pages_low，则kswapd会对lru_list前四个lru队列进行扫描，在活跃链表中查找不活跃的页，并添加不活跃链表；然后再遍历不活跃链表，逐个进行回收释放出32个页，知道free page数量达到pages_high；针对不同的页，回收方式也不一样；
 
-当然，当内存水平低于某个极限阀值时，会直接发出内存回收，原理和kswapd一样，但是这次回收力度更大，需要回收更多的内存；
+当然，当内存水平低于某个极限阈值时，会直接发出内存回收，原理和kswapd一样，但是这次回收力度更大，需要回收更多的内存；
 
 文件页：
 1. 如果是脏页，则直接回写进磁盘，再回收内存；
@@ -522,21 +522,6 @@ swap换进换出其实是很占用系统IO的，如果系统内存需求突然�
 
 > 我一直很支持学计算机的朋友学习linux和c/c++，因为现在服务器几乎都是linux系统，而且经典高性能服务器软件大部分是c/c++(nginx,redis,mysql,redis,leveldb等等)写的，且跑在linux系统上；其次就是，linux暴露给外界进入的入口就是系统调用，其他语言如果想嵌入内核，就必须封装系统调用接口；而C++主要是锻炼oop思想还有泛型思想；因此，学好了linux和c/c++，再学其他软件或语言，都会轻松很多；**这也就是我一直喜欢linux和c/c++的原因**
 
-> 像这次实习接触golang语言；如果有c/c++基础，golang语法层面是很快熟悉的；然后如果了解linux系统系统调用以及内核原理，那么golang执行与系统相关的函数也会很好理解；像平时使用的网络编程，golang没有提供epoll接口，但是其实内部是有用这个epoll进行轮训的；后面要好好写写博客，聊聊golang
+> 像这次实习接触golang语言；如果有c/c++基础，golang语法层面是很快熟悉的；然后如果了解linux系统系统调用以及内核原理，那么golang执行与系统相关的函数也会很好理解；像平时使用的网络编程，golang没有提供epoll接口，但是其实内部是有用这个epoll进行轮询的；后面要好好写写博客，聊聊golang
 
 还是那句话，如果有什么出错的地方，希望大家能指出来，感谢～
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

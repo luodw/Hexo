@@ -180,10 +180,12 @@ sidebar:
 
 # Blogrolls
 links_title: Links
-#links_layout: block
-#links_layout: inline
-#links:
-  #Title: http://example.com/
+links_layout: block
+# links_layout: inline
+links:
+  赖明星: http://mingxinglai.com/
+  阮榕城: http://nekomiao.me/
+  厦门大学数据库实验室: http://dblab.xmu.edu.cn/
 
 
 # ---------------------------------------------------------------
@@ -283,7 +285,7 @@ duoshuo_info:
   ua_enable: true
   admin_enable: false
   user_id: 0
-  #admin_nickname: Author
+  admin_nickname: Author
 
 
 # Facebook SDK Support.
