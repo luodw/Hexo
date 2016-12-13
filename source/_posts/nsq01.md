@@ -11,6 +11,8 @@ toc: true
 
 消息队列在互联网公司使用非常普遍，因此也促使我去学习研究消息队列的原理以及细节问题；之前也有接触过消息队列，最主要就是在异步处理方面，当然消息队列还解耦，流量削峰等功能；目前消息队列产品也比较多，例如kafka，ActiveMQ，RabbitMQ，NSQ等等；之前原本打算看kafka，但是处于学习成本(kafka是scala编写，之前scala接触的比较少)，所以就先不看kafka，选择了NSQ；NSQ主要是golang编写，本人刚好非常喜欢golang这门语言，因此在学习NSQ的同时，也可以学习NSQ是如何优雅地使用golang;
 
+![厦门飞机场](http://7xjnip.com1.z0.glb.clouddn.com/ldw-1802933924.jpg "")
+
 目前，看了nsqlookupd的代码，写的真的很精美，我觉得代码可以和redis相媲美，这等后续分析代码时再详说；关于NSQ的特性，可以查看[NSQ官网](http://nsq.io/overview/features_and_guarantees.html "")；这篇文章主要分析以下几点:
 1. NSQ概述;
 2. python操作NSQ;
