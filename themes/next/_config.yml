@@ -35,7 +35,7 @@ menu:
   #schedule: /schedule
   about: /about
   #commonweal: /404.html
-
+  2017-reading: /2017-reading
 
 # Enable/Disable menu icons.
 # Icon Mapping:
@@ -50,6 +50,7 @@ menu_icons:
   categories: th
   schedule: calendar
   tags: tags
+  2017-reading: read
   archives: archive
   commonweal: heartbeat
 

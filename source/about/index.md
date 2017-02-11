@@ -29,3 +29,5 @@ date: 2015-09-23 20:35:47
 10. [无锁设计，因为futex才找到的](http://locklessinc.com/articles/mutex_cv_futex/ "")
 11. [restcookbook.com](http://restcookbook.com/Basics/loggingin/ "")
 12. [深入理解go](https://tiancaiamao.gitbooks.io/go-internals/content/zh/index.html "")
+13. [Raft原理动图](http://thesecretlivesofdata.com/raft/ "")
+
