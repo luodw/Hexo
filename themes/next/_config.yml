@@ -31,11 +31,12 @@ menu:
   home: /
   #categories: /categories
   archives: /archives
-  tags: /tags
+  #tags: /tags
   #schedule: /schedule
-  about: /about
   #commonweal: /404.html
   2017-reading: /2017-reading
+  bookmark: /bookmark
+  about: /about
 
 # Enable/Disable menu icons.
 # Icon Mapping:
@@ -51,6 +52,7 @@ menu_icons:
   schedule: calendar
   tags: tags
   2017-reading: read
+  bookmark: bookmark
   archives: archive
   commonweal: heartbeat
 
