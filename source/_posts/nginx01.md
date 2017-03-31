@@ -1,4 +1,4 @@
-title: nginx是这么运行的
+title: Nginx是这么运行的
 date: 2017-03-17 11:19:36
 tags:
 - nginx
@@ -8,6 +8,8 @@ categories:
 toc: true
 
 ---
+
+【版权声明】博客内容由罗道文的私房菜拥有版权，允许转载，但请标明原文链接[http://luodw.cc/2017/03/17/nginx01/#more](http://luodw.cc/2017/03/17/nginx01/#more "")！
 
 很早之前就有看nginx的冲动，但是一直被一些事耽搁着，最近在繁忙之中，抽出点时间，看了下nginx代码，发现整体上并不是很难看懂，而且刚好想学习nginx+lua开发，因此，决定在今后一段时间内，对技术的时间投入都放在nginx+lua了。nginx在互联网公司使用很广，最重要的功能当属反向代理和负载均衡了吧，当然还有缓存；所以对nginx的熟悉使用和深入了解，对于一名后台开发人员，至关重要。
 
@@ -97,7 +99,7 @@ ok，worker进程此时已就绪，等待客户端连接以及请求数据；为
 > 像listenfd的回调函数以及模块间是如何拼凑在一起，这些几乎都是在模块初始化时完成的。对于listenfd的回调函数即是在event模块初始化时或者调用event模块一些设置函数时设置；客户端连接上服务器之后，服务器收到请求之后的回调函数也是在http模块初始化时或者调用模http模块一些设置函数时设置的。
 
 在event模块初始化时，调用的是ngx\_event\_process\_init函数，下面列出这个函数最重要的代码:
-```
+```c
 static ngx_int_t
 ngx_event_process_init(ngx_cycle_t *cycle)
 {
@@ -148,7 +150,7 @@ ok，当我们去看ngx\_add\_conn和ngx\_add\_event的定义时，如下：
 #define ngx_add_conn         ngx_event_actions.add_conn
 ```
 说明ngx\_add\_conn和ngx\_add\_event都是结构体ngx\_event\_actions结构体中设置的函数指针；其实这个ngx\_event\_actions就是nginx跨平台的关键，因为不同平台使用的事件监听器是不一样的，导致ngx\_event\_actions也就不一样。例如linux使用的是epoll，因此ngx\_event\_actions结构体就是在epoll模块加载时设置，在上述代码前半部分。我们来看下epoll模块actions.init函数：
-```
+```c
 // ngx_epoll_module.c
 static ngx_int_t
 ngx_epoll_init(ngx_cycle_t *cycle, ngx_msec_t timer)
@@ -162,7 +164,7 @@ ngx_epoll_init(ngx_cycle_t *cycle, ngx_msec_t timer)
 }
 ```
 从代码可以看出，ngx\_event\_actions被设置为ngx\_epoll\_module_ctx.actions，接着看下这个结构体:
-```
+```c
 ngx_event_module_t  ngx_epoll_module_ctx = {
     &epoll_name,
     ngx_epoll_create_conf,               /* create configuration */
@@ -185,7 +187,7 @@ ngx_event_module_t  ngx_epoll_module_ctx = {
 因此，当调用ngx\_add\_conn和ngx\_add\_event时，分别调用的是ngx\_epoll\_add\_connection和ngx\_epoll\_add\_event;如此一来，如果此时是mac平台，那么使用的事件监听器是kqueue，那么当调用ngx\_add\_event时，调用的就是ngx\_kqueue\_add\_event。如果使用的poll监听器，那么调用将是ngx\_poll\_add\_event等等。
 
 接下来，再分析一个很重要的回调函数，即客户端连上客户端之后，发送请求时的回调函数，先来看下，listenfd回调函数
-```
+```c
 void
 ngx_event_accept(ngx_event_t *ev)
 {
@@ -216,7 +218,7 @@ ngx_event_accept(ngx_event_t *ev)
 ```
 
 当客户端连接服务器时，首先listenfd回调函数先是调用accept函数接收客户端请求，然后从对象池中获取一个封装客户端socket连接对象，如果目前使用的是epoll事件监听器，则调用ngx\_add\_conn(c)放入事件监听，最后调用ngx\_listening\_t的回调函数，对客户端连接进一步操作；ok，这个ls->handler(c)是个啥？我在第一次看代码时，一脸懵逼！！！还记得之前说的吗？模块之间的衔接，几乎都是在模块初始化或者调用模块一些设置函数时设置的，因此接下来，就来看看http模块初始化时做了什么。http模块并没有在模块初始化函数中设置ls->handler(c)，而是在当读取到"http"命令时，执行命令函数ngx\_http\_block中设置；
-```
+```c
 static char *
 ngx_http_block(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 {
@@ -273,7 +275,7 @@ nginx处理http的请求是nginx最重要的职能，也是最复杂的一部分
 
 因为多阶段这块内容还没完全看懂，所以跟着网上教程，写了个最简单的第三方模块，用于设置定点调试，观察http阶段函数执行过程，步骤如下：
 1. 在nginx目录下新建一个目录thm（third mudole），在新建一个foo目录（foo模块），然后在foo目录下新建ngx\_http\_foo\_module.c
-```
+```c
 #include <ngx_config.h>
 #include <ngx_core.h>
 #include <ngx_http.h>
@@ -382,7 +384,7 @@ Breakpoint 1, ngx_http_foo_handler (r=0x175bf70) at ./thm/foo/ngx_http_foo_modul
 5. 在ngx\_http\_process\_request函数内部调用ngx\_http\_handler(ngx\_http\_request\_t *r)函数，而在ngx\_http\_handler(ngx\_http\_request\_t *r)函数内部调用
 函数ngx\_http\_core\_run\_phases进行多阶段处理；
 6. 我们来看下多阶段处理函数ngx\_http\_core\_run\_phases
-```
+```c
 void
 ngx_http_core_run_phases(ngx_http_request_t *r)
 {

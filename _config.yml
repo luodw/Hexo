@@ -82,11 +82,13 @@ search:
 
 swiftype_key: chcHaQRahdwMUNbzMpw5
 
-duoshuo_shortname: luodw
-duoshuo_hotartical: true
+# duoshuo_shortname: luodw
+# duoshuo_hotartical: true
 
 markdown: 'default'
 
+
+gentie_productKey: 5f86fe3bc07e4e31adb4a20c48cbf8f2
 
 baidu_analytics: c8bfd43d39ee97fe670b76fe06d38c03
 baidusitemap:
