@@ -186,9 +186,11 @@ links_title: Links
 links_layout: block
 # links_layout: inline
 links:
-  赖明星: http://mingxinglai.com/
-  蔡珉星: http://www.powerxing.com/
-  阮榕城: http://nekomiao.me/
+  赖明星的博客地址: http://mingxinglai.com/
+  蔡珉星的博客地址: http://www.powerxing.com/
+  阮榕城的博客地址: http://nekomiao.me/
+  陈友兵的博客地址: http://youbingchenyoubing.leanote.com/
+  郑江龙的博客地址: http://zhengjianglong.leanote.com/
   厦门大学数据库实验室: http://dblab.xmu.edu.cn/
 
 

@@ -21,6 +21,8 @@ golang很适合写服务，首先是语言层面支持高并发，其次是对ht
 * [深入理解Go](https://tiancaiamao.gitbooks.io/go-internals/content/zh/index.html "")
 * [Implemention of golang](https://tracymacding.gitbooks.io/implementation-of-golang/content/ "")
 
+【版权声明】博客内容由罗道文的私房菜拥有版权，允许转载，但请标明原文链接[http://luodw.cc/2016/08/23/golang01/](http://luodw.cc/2016/08/23/golang01/ "")
+
 在了解基础于语法以及一些底层原理之后，我觉得可以看看golang自带的框架，写的非常棒，很适合学习，特别是http和rpc，因为学习这两个框架可以了解到一次http请求是如何实现的，以及一次rpc过程是怎么实现的；当然还有一些第三方开源框架也写得很好；
 
 ok，下面就来看看缓存库groupcache是怎么实现的。
