@@ -14,6 +14,7 @@ toc: true
 2. Spark实时从Kafka接收购物日志，利用Spark Streaming实时处理，最后将结果发送给Kafka；
 3. 用Flask构建一个web程序接收Kafka处理后的数据，用Flask-SocketIO实时将每秒的数据发送给客户端浏览器；
 4. 浏览器利用socket.io.js实时接收web发送来的数据，利用highcharts.js展示出来。
+
 这个案例很好的展示了利用Spark+Kafka实时处理数据的开发模式。Spark在实时处理和批量处理都有很高的性能，Kafka消息队列在异步解耦，冗余处理和削峰等方面有很高的性能。
 
 Kafka在互联网各大公司都有很广泛的应用，主要在于Kakfa性能出众，又有很好的扩展性和稳定性。而之前看过NSQ消息队列，对消息队列的分布式架构都有一定的了解，所以想最近这段时间看看kafka源码，熟悉下Kafka的整体架构，以及学习Scala和Java是如何写基础组件的。
@@ -21,7 +22,8 @@ Kafka在互联网各大公司都有很广泛的应用，主要在于Kakfa性能�
 这篇文章先介绍下Kafka的整体架构，在通过一个简单的实例展示Python是如何操作Kafka消息队列，如下：
 1. Kafka整体架构；
 2. Python操作Kafka；
-3. 总结；
+3. Java操作Kafka；
+4. 总结；
 
 【版权声明】博客内容由罗道文的私房菜拥有版权，允许转载，但请标明原文链接[http://luodw.cc/2017/04/24/kafka01/#more](http://luodw.cc/2017/04/24/kafka01/#more "")
 
@@ -63,7 +65,7 @@ Kafka相对于NSQ架构更加的复杂，但也提供更丰富的功能，下面
 
 > 消费者组内的多个消费者主要就是为了实现负载均衡。　
 
-# Ｐython操作Kafka
+# Python操作Kafka
 
 -----
 
@@ -98,6 +100,89 @@ Hello World!
 Hello World!
 Hello World!
 ...
+```
+
+# Java操作Kafka
+
+-------
+
+在后端开发写业务代码中，经常使用的当属Python和Java，因此下面再给出Java操作Kafka的简单示例，代码取自Kafka源码，生产者代码如下:
+```java
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+
+import java.util.Properties;
+
+/**
+ * Created by charles on 17-4-29.
+ */
+public class ProducerDemo {
+    public static void main(String[] args){
+        Properties props = new Properties();
+        props.put("bootstrap.servers", "localhost:9092");
+        props.put("acks", "all");
+        props.put("retries", 0);
+        props.put("batch.size", 16384);
+        props.put("linger.ms", 1);
+        props.put("buffer.memory", 33554432);
+        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+        Producer<String,String> producer = new KafkaProducer<>(props);
+        for(int i = 0; i<=100; i++) {
+            producer.send(new ProducerRecord<>("mytopic", Integer.toString(i), Integer.toString(i)));
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        producer.close();
+    }
+}
+```
+
+消费者代码如下:
+```java
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+
+import java.util.Arrays;
+import java.util.Properties;
+
+/**
+ * Created by charles on 17-4-29.
+ */
+public class ConsumerDemo {
+    public static void main(String[] args){
+        Properties props = new Properties();
+        props.put("bootstrap.servers", "localhost:9092");
+        props.put("group.id", "test");
+        props.put("enable.auto.commit", "true");
+        props.put("auto.commit.interval.ms", "1000");
+        props.put("session.timeout.ms", "30000");
+        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+        consumer.subscribe(Arrays.asList("mytopic"));
+        while (true) {
+            ConsumerRecords<String, String> records = consumer.poll(100);
+            for (ConsumerRecord<String, String> record : records)
+                System.out.printf("topic=%s, partition=%s, offset = %d, key = %s, value = %s\n", record.topic(),record.partition(),record.offset(), record.key(), record.value());
+        }
+    }
+}
+```
+
+在Intellij idea的ConsumerDemo窗口，可以得到如下输出
+```
+topic=mytopic, partition=0, offset = 21, key = 0, value = 0
+topic=mytopic, partition=0, offset = 22, key = 1, value = 1
+topic=mytopic, partition=0, offset = 23, key = 2, value = 2
+topic=mytopic, partition=0, offset = 24, key = 3, value = 3
+topic=mytopic, partition=0, offset = 25, key = 4, value = 4
 ```
 
 当然Kafka的Producer和Consumer都有很多配置，例如ack，是否自动commmitOffset等等，这也是我后续想看源码的原因，因为看了源码，可以更好的理解这些参数是什么意思，怎么做优化。
